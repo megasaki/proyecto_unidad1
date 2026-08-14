@@ -1,6 +1,7 @@
+# ==============================================================================
 # SISTEMA DE CONTROL Y CÁLCULO DE PROMEDIO ACADÉMICO
+# ==============================================================================
 
-# clase padre
 class Evaluacion:
     def __init__(self, nombre, nota):
         self.nombre = nombre
@@ -9,8 +10,6 @@ class Evaluacion:
     def mostrar_informacion(self):
         print(f"Nombre: {self.nombre}, Nota: {self.nota}")
 
-
-#clase hija 1
 class Examen(Evaluacion):
     def __init__(self, nombre, nota, tipo_examen):
         super().__init__(nombre, nota)
@@ -19,8 +18,6 @@ class Examen(Evaluacion):
     def obtener_informacion(self):
         return f"{self.nombre} (Examen {self.tipo_examen}): {self.nota:.2f} pts"
 
-
-# clase hija 2
 class TrabajoPractico(Evaluacion):
     def __init__(self, nombre, nota, es_grupal):
         super().__init__(nombre, nota)
@@ -29,13 +26,15 @@ class TrabajoPractico(Evaluacion):
     def obtener_informacion(self):
         modalidad = "Grupal" if self.es_grupal else "Individual"
         return f"{self.nombre} (Trabajo {modalidad}): {self.nota:.2f} pts"
-    
-    
+
+
+
 registro_academico = [
     TrabajoPractico("Tarea 1", 85.0, es_grupal=False),
     Examen("Examen Parcial 1", 68.0, tipo_examen="Parcial"),
     TrabajoPractico("Sistemático 1", 92.0, es_grupal=True)
 ]
+
 
 def mostrar_notas_precargadas(registro):
     print("\n--- NOTAS REGISTRADAS EN LA ASIGNATURA ---")
@@ -45,7 +44,8 @@ def mostrar_notas_precargadas(registro):
 
     for i, evaluacion in enumerate(registro):
         print(f"{i + 1}. {evaluacion.obtener_informacion()}")
-        
+
+
 def registrar_nota(registro):
     print("\n--- REGISTRAR NUEVA EVALUACIÓN ---")
     print("Tipo de actividad:")
@@ -54,29 +54,34 @@ def registrar_nota(registro):
 
     try:
         opcion_tipo = int(input("Seleccione el tipo (1 o 2): "))
+        if opcion_tipo not in [1, 2]:
+            raise ValueError
     except ValueError:
         print(" Error: Selección inválida. Se registrará como Trabajo Práctico por defecto.")
         opcion_tipo = 2
 
-    nombre_evaluacion = input("Ingrese el nombre de la evaluación: ").strip()
-
-    if not nombre_evaluacion:
-        print("Error: El nombre no puede estar vacío.")
-        return
+    while True:
+        nombre_evaluacion = input("Ingrese el nombre de la evaluación: ").strip()
+        
+        if not nombre_evaluacion:
+            print(" Error: El nombre no puede estar vacío.")
+        elif not any(letra.isalpha() for letra in nombre_evaluacion):
+            print(" Error: El nombre debe contener letras (ej. 'Tarea 2'). No ingrese solo números.")
+        else:
+            break 
     
     while True:
         try:
             nota_input = float(input("Ingrese la nota obtenida (0 - 100): "))
 
             if 0 <= nota_input <= 100:
-                # Se instancia la clase correspondiente
                 if opcion_tipo == 1:
                     nueva_evaluacion = Examen(nombre_evaluacion, nota_input, "General")
                 else:
                     nueva_evaluacion = TrabajoPractico(nombre_evaluacion, nota_input, es_grupal=False)
                 
                 registro.append(nueva_evaluacion)
-                print(f"✓ Éxito: Evaluación guardada correctamente con {nota_input:.2f} pts.")
+                print(f"✓ Éxito: '{nombre_evaluacion}' guardada correctamente con {nota_input:.2f} pts.")
                 break
             else:
                 print(" Error: La nota debe estar entre 0 y 100. Intente de nuevo.")
@@ -84,11 +89,10 @@ def registrar_nota(registro):
         except ValueError:
             print(" Error: Por favor, ingrese un número válido (ej. 85 o 78.5).")
 
-
 def calcular_promedio_y_estado(registro):
     print("\n--- BALANCE ACADÉMICO Y ESTADO ---")
     if not registro:
-        print("No hay datos para calcular el promedio.")
+        print("No hay datos suficientes.")
         return
     
     lista_notas = [evaluacion.nota for evaluacion in registro]
@@ -103,7 +107,8 @@ def calcular_promedio_y_estado(registro):
 
     print(f"Promedio acumulado actual: {promedio:.2f} / 100 pts")
     print(f"Estado de la asignatura: [{estado}]")
-    
+
+
 def generar_metricas(registro):
     print("\n--- MÉTRICAS Y RENDIMIENTO DETALLADO ---")
     if not registro:
@@ -129,3 +134,39 @@ def generar_metricas(registro):
         puntos_faltantes = 70.0 - promedio_actual
         print(f"• Proyección: Te faltan {puntos_faltantes:.2f} pts en tu promedio acumulado para alcanzar la nota mínima de aprobación (70 pts).")
 
+
+
+def ejecutar_sistema():
+    while True:
+        print()
+        print("==========================================")
+        print(" SISTEMA DE NOTAS ACADÉMICAS (VERSIÓN POO) ")
+        print("==========================================")
+        print("1. Ver notas registradas (Datos iniciales)")
+        print("2. Registrar una nueva nota")
+        print("3. Calcular promedio y estado académico")
+        print("4. Generar métricas de rendimiento")
+        print("5. Salir")
+
+        try:
+            opcion = int(input("\nSeleccione una opción (1-5): "))
+
+            if opcion == 1:
+                mostrar_notas_precargadas(registro_academico)
+            elif opcion == 2:
+                registrar_nota(registro_academico)
+            elif opcion == 3:
+                calcular_promedio_y_estado(registro_academico)
+            elif opcion == 4:
+                generar_metricas(registro_academico)
+            elif opcion == 5:
+                print("\nSistema finalizado. ¡Éxito en la materia!")
+                break
+            else:
+                print(" Error: Opción no válida. Ingrese un número del 1 al 5.")
+
+        except ValueError:
+            print(" Error: Ingrese únicamente el número de la opción elegida (1, 2, 3, 4 o 5).")
+
+if __name__ == "__main__":
+    ejecutar_sistema()
