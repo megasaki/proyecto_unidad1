@@ -49,13 +49,17 @@ def registrar_nota(registro):
     print("1. Examen")
     print("2. Trabajo Práctico")        
 
-    try:
-        opcion_tipo = int(input("Seleccione el tipo (1 o 2): "))
-        if opcion_tipo not in [1, 2]:
-            raise ValueError
-    except ValueError:
-        print(" Error: Selección inválida. Se registrará como Trabajo Práctico por defecto.")
-        opcion_tipo = 2
+   
+    while True:
+        try:
+            opcion_tipo = int(input("Seleccione el tipo (1 o 2): "))
+            if opcion_tipo in [1, 2]:
+                break 
+            else:
+                print(" Error: Selección inválida. Por favor, ingrese el número 1 o 2.")
+        except ValueError:
+            print(" Error: Debe ingresar un número entero (1 o 2). No se aceptan letras.")
+   
 
     while True:
         nombre_evaluacion = input("Ingrese el nombre de la evaluación: ").strip()
@@ -78,7 +82,7 @@ def registrar_nota(registro):
                     nueva_evaluacion = TrabajoPractico(nombre_evaluacion, nota_input, es_grupal=False)
                 
                 registro.append(nueva_evaluacion)
-                print(f"✓ Éxito: '{nombre_evaluacion}' guardada correctamente con {nota_input:.2f} pts.")
+                print(f" Éxito: '{nombre_evaluacion}' guardada correctamente con {nota_input:.2f} pts.")
                 break
             else:
                 print(" Error: La nota debe estar entre 0 y 100. Intente de nuevo.")
