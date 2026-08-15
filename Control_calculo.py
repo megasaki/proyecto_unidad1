@@ -1,6 +1,3 @@
-# ==============================================================================
-# SISTEMA DE CONTROL Y CÁLCULO DE PROMEDIO ACADÉMICO
-# ==============================================================================
 
 class Evaluacion:
     def __init__(self, nombre, nota):
@@ -125,14 +122,14 @@ def generar_metricas(registro):
     idx_min = lista_notas.index(nota_minima)
     promedio_actual = sum(lista_notas) / len(lista_notas)
 
-    print(f"• Nota más alta: {nota_maxima:.2f} pts ({lista_nombres[idx_max]})")
-    print(f"• Nota más baja: {nota_minima:.2f} pts ({lista_nombres[idx_min]})")
+    print(f" Proyección: Nota más alta: {nota_maxima:.2f} pts ({lista_nombres[idx_max]})")
+    print(f" Proyección: Nota más baja: {nota_minima:.2f} pts ({lista_nombres[idx_min]})")
 
     if promedio_actual >= 70.0:
-        print("• Proyección: ¡Ya tienes el promedio suficiente para aprobar la asignatura!")
+        print(" Proyección: ¡Ya tienes el promedio suficiente para aprobar la asignatura!")
     else:
         puntos_faltantes = 70.0 - promedio_actual
-        print(f"• Proyección: Te faltan {puntos_faltantes:.2f} pts en tu promedio acumulado para alcanzar la nota mínima de aprobación (70 pts).")
+        print(f" Proyección: Te faltan {puntos_faltantes:.2f} pts en tu promedio acumulado para alcanzar la nota mínima de aprobación (70 pts).")
 
 
 
@@ -140,7 +137,7 @@ def ejecutar_sistema():
     while True:
         print()
         print("==========================================")
-        print(" SISTEMA DE NOTAS ACADÉMICAS (VERSIÓN POO) ")
+        print(" SISTEMA DE NOTAS ACADÉMICAS ")
         print("==========================================")
         print("1. Ver notas registradas (Datos iniciales)")
         print("2. Registrar una nueva nota")
