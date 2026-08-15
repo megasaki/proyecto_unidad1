@@ -78,7 +78,7 @@ def registrar_nota(registro):
                     nueva_evaluacion = TrabajoPractico(nombre_evaluacion, nota_input, es_grupal=False)
                 
                 registro.append(nueva_evaluacion)
-                print(f"✓ Éxito: '{nombre_evaluacion}' guardada correctamente con {nota_input:.2f} pts.")
+                print(f"Éxito: '{nombre_evaluacion}' guardada correctamente con {nota_input:.2f} pts.")
                 break
             else:
                 print(" Error: La nota debe estar entre 0 y 100. Intente de nuevo.")
@@ -109,7 +109,7 @@ def calcular_promedio_y_estado(registro):
 def generar_metricas(registro):
     print("\n--- MÉTRICAS Y RENDIMIENTO DETALLADO ---")
     if not registro:
-        print("No hay notas suficientes para generar métricas.")
+        print("No hay notas suficientes para generar tus métricas.")
         return
     
     lista_notas = [ev.nota for ev in registro]
@@ -157,13 +157,13 @@ def ejecutar_sistema():
             elif opcion == 4:
                 generar_metricas(registro_academico)
             elif opcion == 5:
-                print("\nSistema finalizado. ¡Éxito en la materia!")
+                print("\nSistema finalizado. suerte con tu aprendizaje")
                 break
             else:
                 print(" Error: Opción no válida. Ingrese un número del 1 al 5.")
-
+          
         except ValueError:
-            print(" Error: Ingrese únicamente el número de la opción elegida (1, 2, 3, 4 o 5).")
+            print(" Error: \n los carecteres no estan permitidos, Ingrese únicamente el número de la opción elegida (1, 2, 3, 4 o 5).")
 
 if __name__ == "__main__":
     ejecutar_sistema()
