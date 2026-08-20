@@ -25,7 +25,6 @@ class TrabajoPractico(Evaluacion):
         return f"{self.nombre} (Trabajo {modalidad}): {self.nota:.2f} pts"
 
 
-
 registro_academico = [
     TrabajoPractico("Tarea 1", 85.0, es_grupal=False),
     Examen("Examen Parcial 1", 68.0, tipo_examen="Parcial"),
@@ -48,8 +47,7 @@ def registrar_nota(registro):
     print("Tipo de actividad:")
     print("1. Examen")
     print("2. Trabajo Práctico")        
-
-   
+    
     while True:
         try:
             opcion_tipo = int(input("Seleccione el tipo (1 o 2): "))
@@ -59,7 +57,6 @@ def registrar_nota(registro):
                 print(" Error: Selección inválida. Por favor, ingrese el número 1 o 2.")
         except ValueError:
             print(" Error: Debe ingresar un número entero (1 o 2). No se aceptan letras.")
-   
 
     while True:
         nombre_evaluacion = input("Ingrese el nombre de la evaluación: ").strip()
